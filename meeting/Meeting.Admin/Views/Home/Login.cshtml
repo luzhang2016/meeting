@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+   
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <!--样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-default/index.css">
+    <!-- 引用 Vue -->
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <!-- 引用js -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+    <script type="text/javascript">
+    new Vue({
+      el: '#app',
+      data: function() {
+        return { visible: false }
+      }
+    })
+    </script>
+</head>
+<body>
+    <div id="app">
+        <el-button @@click="visible = true">点击</el-button>
+        <el-dialog v-model="visible" title="Hello world">
+            <p>Hey  Element</p>
+        </el-dialog>
+    </div>
+</body>
+
+</html>
