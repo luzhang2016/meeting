@@ -26,7 +26,7 @@
                     </a>
                 </div>
                 <div class="bottom-icon">
-                    <router-link :to="{ name: 'downloadDetail', params: {uuid:item.UUID,index:index}}">
+                    <router-link :to="{ name: 'downloadDetail', params: {mid:item.fmid,index:index}}">
                         <i class="fa fa-ellipsis-h fa-lg" aria-hidden="true"></i>
                     </router-link>
                 </div>
@@ -43,22 +43,23 @@ export default {
         return {
             currentIndex: '',
             details: [],
-            uuid: '',
+            mid: '',
             name: user.username,
             loading: true
         }
     },
     mounted() {
-        this.uuid = this.$route.params.uuid;
-        this.fetchData(this.uuid);
+        this.mid = this.$route.params.mid;
+        this.fetchData(this.mid);
     },
     methods: {
         toggle(index) {
             this.details[index].isShow = !this.details[index].isShow;
         },
-        fetchData(uuid) {
+        fetchData(mid) {
             //0附件 1记录
-            this.$plugin_api.getFiles(uuid, 0).then(res => {
+            this.$plugin_api.getFiles(mid, 0).then(res => {
+                console.log(res)
                 this.details = res;
                 for (let i = 0; i < this.details.length; i++) {
                     this.$set(this.details[i], 'isShow', false);
@@ -67,7 +68,7 @@ export default {
             })
         },
         downFile(item, index) {
-            this.$plugin_api.downLoad(item.FileUUID, this.name).then(res => {
+            this.$plugin_api.downLoad(item.Filemid, this.name).then(res => {
                 this.details[index].DownloadTimes++;
             }).catch(err => {
                 Toast("下载失败，请重试");

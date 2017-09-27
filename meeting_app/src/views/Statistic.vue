@@ -42,14 +42,13 @@ export default {
         }
     },
     mounted() {
-        this.uuid = this.$route.params.uuid;
-        this.fetchData(this.uuid);
+        this.mid = this.$route.params.mid;
+        this.fetchData(this.mid);
         this.draw();
     },
     methods: {
-        fetchData(uuid) {
-            // let token = this.md5();
-            this.$plugin_api.getSignInList(uuid).then(res => {
+        fetchData(mid) {
+            this.$plugin_api.getSignInList(mid).then(res => {
                 this.members = res.members;
                 this.data = res;
                 this.loading = false;

@@ -3,12 +3,12 @@
     <loading v-show="loading"></loading>
     <myhead title="会议议程"></myhead>
     <div class="agenda-wrapper">
-      <p class="title-wrapper">会议议程：{{MeetingAgenda.title}}</p>
+      <p class="title-wrapper">会议议程：{{MeetingAgenda.Title}}</p>
       <p class="nameTime">
-        <span>发言人：{{MeetingAgenda.name}}</span>
-        <span class="time">时间：{{MeetingAgenda.sTime|clock}}-{{MeetingAgenda.eTime|clock}}</span>
+        <span>发言人：{{MeetingAgenda.Name}}</span>
+        <span class="time">时间：{{MeetingAgenda.STime|clock}}-{{MeetingAgenda.ETime|clock}}</span>
       </p>
-      <p class="content">{{MeetingAgenda.content}}</p>
+      <p class="content">{{MeetingAgenda.Content}}</p>
     </div>
     <div>
   
@@ -19,22 +19,21 @@
 export default {
   data() {
     return {
-      uuid: '',
+      mid: '',
       index: '',
       MeetingAgenda: '',
       loading:true
     }
   },
   mounted() {
-    this.uuid = this.$route.params.uuid;
+    this.mid = this.$route.params.mid;
     this.index = this.$route.params.index;
-    this.fetchData(this.uuid, this.index);
+    this.fetchData(this.mid, this.index);
   },
   methods: {
-    fetchData(uuid, index) {
-      
-      this.$plugin_api.getMeeting(uuid).then(res => {
-        this.MeetingAgenda = res.MeetingAgenda[index];
+    fetchData(mid, index) {
+      this.$plugin_api.getAgenda(mid).then(res => {
+        this.MeetingAgenda = res[index];
         this.loading=false;
       }
       )

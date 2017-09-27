@@ -35,18 +35,18 @@ export default {
         }
     },
     mounted() {
-        this.uuid = this.$route.params.uuid;
-        this.fetchData(this.uuid);
+        this.mid = this.$route.params.mid;
+        this.fetchData(this.mid);
     },
     methods: {
-        fetchData(uuid) {
+        fetchData(mid) {
             //0附件 1记录
-            this.$plugin_api.getFiles(uuid, 1).then(res => {
+            this.$plugin_api.getFiles(mid, 1).then(res => {
                 this.records = res;
                 this.records.forEach(e => {
                     e.isDownload = false;
                     for (let i = 0; i < e.Download.length; i++) {
-                        if (this.name == e.Download[i].downloadUser)
+                        if (this.name == e.Download[i].DownloadUser)
                             this.records[i].isDownload = true;
                     }
                 });
@@ -54,7 +54,7 @@ export default {
             })
         },
         downFile(item, index) {
-            this.$plugin_api.downLoad(item.FileUUID, this.name).then(res => {
+            this.$plugin_api.downLoad(item.fid, this.name).then(res => {
                 this.records[index].DownloadTimes++;
                 this.records[index].isDownload = true;
             }).catch(err => {

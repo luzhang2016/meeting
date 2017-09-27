@@ -3,16 +3,16 @@
 		<ul class="cbp_tmtimeline">
 			<li v-for="(item,index) in meetingData.MeetingAgenda" :key="index">
 				<time class="cbp_tmtime">
-					<span class="date">{{item.sTime|date}}</span>
-					<span class="time">{{item.sTime|clock}}</span>
-					<span class="day">{{item.sTime|day}}</span>
+					<span class="date">{{item.STime|date}}</span>
+					<span class="time">{{item.STime|clock}}</span>
+					<span class="day">{{item.STime|day}}</span>
 				</time>
 				<div class="cbp_tmicon"></div>
 				<div class="cbp_tmlabel">
-					<p class="title">{{item.title}}</p>
-					<p class="speaker">发言人：{{item.name}}</p>
-					<p class="content"> 内容摘要：{{item.summary}}</p>
-					<router-link :to="{ name: 'agenda', params: { uuid: meetingData.UUID,index:index}}">
+					<p class="title">{{item.Title}}</p>
+					<p class="speaker">发言人：{{item.Name}}</p>
+					<p class="content"> 内容摘要：{{item.Summary}}</p>
+					<router-link :to="{ name: 'agenda', params: { mid: meetingData.mid,index:index}}">
 						<p class="more">详情
 							<span>
 								<i class="fa fa-angle-right fa-lg" aria-hidden="true"></i>
@@ -34,16 +34,13 @@ export default {
 			return time.substr(11, 5);
 		},
 		date(time) {
-			// return time.substr(5, 5);
-			let arys1 = new Array()
-			arys1 = time.split('-');
+			let arys1 = time.split('-');
 			let month = parseInt(arys1[1])
 			let day = parseInt(arys1[2])
 			return month + "月" + day + "日" 
 		},
 		day(time){
-			let arys1 = new Array()
-			arys1 = time.split('-');
+			let arys1 = time.split('-');
 			let month = parseInt(arys1[1])
 			let day = parseInt(arys1[2])
 			let ssdate = new Date(arys1[0], month - 1, day);

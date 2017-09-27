@@ -13,19 +13,17 @@ export default {
     data() {
         return {
             content: '',
-            uuid: ''
+            mid: ''
         }
     },
     mounted() {
-        // var reg = /\/meeting\/(\d+)/;
-        // var id = this.$route.path.match(reg)[1];
-        this.uuid = this.$route.params.uuid;
-        this.fetchData(this.uuid);
+        this.mid = this.$route.params.mid;
+        this.fetchData(this.mid);
     },
     methods: {
-        fetchData(uuid) {
-            this.$plugin_api.getMeeting(uuid).then(res => {
-                this.content = res.MeetingContent;
+        fetchData(mid) {
+            this.$plugin_api.getMeeting(mid).then(res => {
+                this.content = res[0].MeetingContent;
             });
         }
     },

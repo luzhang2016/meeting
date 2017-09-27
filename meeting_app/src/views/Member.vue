@@ -40,8 +40,8 @@ export default {
     }
   },
   mounted() {
-    this.uuid = this.$route.params.uuid;
-    this.fetchData(this.uuid);
+    this.mid = this.$route.params.mid;
+    this.fetchData(this.mid);
   },
   watch: {
     value: function () {
@@ -53,9 +53,9 @@ export default {
     }
   },
   methods: {
-    fetchData(uuid) {
-      this.$plugin_api.getMeeting(uuid).then(res => {
-        this.MeetingMember = res.MeetingMember;
+    fetchData(mid) {
+      this.$plugin_api.getMember(mid).then(res => {
+        this.MeetingMember = res;
         this.fleterByFlag(this.MeetingMember);
         this.loading = false;
       });
@@ -75,9 +75,9 @@ export default {
     },
     fleterByFlag(list) {
       list.forEach(e => {
-        if (e.flag == 1) this.host.push(e);
-        if (e.flag == 2) this.speaker.push(e);
-        if (e.flag == 3) this.audience.push(e);
+        if (e.Flag == 1) this.host.push(e);
+        if (e.Flag == 2) this.speaker.push(e);
+        if (e.Flag == 3) this.audience.push(e);
       })
     }
   }

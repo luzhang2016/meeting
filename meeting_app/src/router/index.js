@@ -20,16 +20,16 @@ export default new Router({
     // scrollBehavior: () => ({ y: 0 }),
     routes: [
         { path: '/', component: Index },
-        { path: '/meeting/:uuid', component: Meeting },
-        { path: '/detail/:uuid', component: Detail },
-        { path: '/content/:uuid', component: Content },
-        { path: '/member/:uuid', component: Member },
-        { path: '/record/:uuid', component: Record },
-        { path: '/register/:uuid', name: 'register', component: Register },
+        { path: '/meeting/:mid', component: Meeting },
+        { path: '/detail/:mid', component: Detail },
+        { path: '/content/:mid', component: Content },
+        { path: '/member/:mid', component: Member },
+        { path: '/record/:mid', component: Record },
+        { path: '/register/:mid', name: 'register', component: Register },
         { path: '/person', component: PersonalData },
-        { path: '/statistic/:uuid', name: 'statistic', component: Statistic },
-        { path: '/registered/:uuid', name: 'registered', component: Registered },
-        { path: '/agenda/:uuid/:index', name: 'agenda', component: MeetingAgenda },
-        { path: '/downloadDetail/:uuid/:index', name: 'downloadDetail', component: downloadDetail }
+        { path: '/statistic/:mid', name: 'statistic', component: Statistic },
+        { path: '/registered/:mid', name: 'registered', component: Registered },
+        { path: '/agenda/:mid/:index', name: 'agenda', component: MeetingAgenda },
+        { path: '/downloadDetail/:mid/:index', name: 'downloadDetail', component: downloadDetail }
     ]
 })

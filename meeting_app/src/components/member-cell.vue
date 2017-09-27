@@ -6,7 +6,7 @@
             </div>
         </div>
         <div class="name">
-            <span>{{member.name}}</span>
+            <span>{{member.Name}}</span>
         </div>
     </div>
 </template>
@@ -17,16 +17,16 @@ export default {
     },
     computed: {
         name: function () {
-            let str = this.member.name;
+            let str = this.member.Name;
             return str.substr(str.length - 2);
         },
         image:function(){
-            switch(this.member.flag){
-                case 1:
+            switch(this.member.Flag){
+                case "1":
                 return 'image host';
-                case 2:
+                case "2":
                 return 'image speaker';
-                case 3:
+                case "3":
                 return 'image audience'
             }
         }

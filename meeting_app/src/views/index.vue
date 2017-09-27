@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <loading v-show="loading"></loading>
+    <!--<loading v-show="loading"></loading>-->
     <div class="top-fixed">
       <myhead title="会议日程">
         <span slot="left" class="left">首页</span>
@@ -15,7 +15,7 @@
       </div>
     </div>
     <div class="content">
-      <router-link :to="'/meeting/'+item.UUID" v-for="(item,index) in selection " :key="index">
+      <router-link :to="'/meeting/'+item.mid" v-for="(item,index) in selection " :key="index">
         <cell :item="item"></cell>
       </router-link>
     </div>
@@ -48,25 +48,28 @@ export default {
     var str = sessionStorage.obj;
     if (!str) {
       //无缓存即默认请求前后一个月数据
-      this.start = this.transfer(this.sTime);
-      this.end = this.transfer(this.eTime);
-      this.fetchData(this.start, this.end);
+      // this.start = this.transfer(this.sTime);
+      // this.end = this.transfer(this.eTime);
+      this.fetchData();
+      // this.$http.get("http://localhost:80/meeting/php/index/list.php").then(res=>{
+      //   console.log(res.data)
+      // })
     } else {
       //将缓存转换为对象 
       this.selection = JSON.parse(str);
       this.save = JSON.parse(str);
-      this.loading = false;
+      // this.loading = false;
     }
   },
   methods: {
-    fetchData(sTime, eTime) {
-      // let token = this.md5();
+    fetchData() {
       this.selection = [];
-      this.$plugin_api.getListSimple(sTime, eTime).then(res => {
+      this.$plugin_api.getListSimple().then(res => {
+        console.log(res)
         res.forEach(e => {
           if (e.MeetingStatus >= 2) { this.selection.push(e) }
         });
-        this.loading = false;
+        // this.loading = false;
         this.save = this.selection;
         //存入
         sessionStorage.obj = JSON.stringify(this.selection);

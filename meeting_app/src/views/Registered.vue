@@ -17,7 +17,7 @@
             <canvas id="myChart" width="200" height="100"></canvas>
             <p class="number">{{res.signInIndex}} / {{res.memberTotal}}</p>
             <p class="text">已签到/应签到</p>
-            <router-link :to="'/statistic/'+this.uuid">
+            <router-link :to="'/statistic/'+this.mid">
                 <div class="data">数据统计</div>
             </router-link>
         </div>
@@ -30,18 +30,18 @@ export default {
     data() {
         return {
             res: {},
-            uuid: '',
+            mid: '',
             phone: user.userphone,
             loading: true
         }
     },
     mounted() {
-        this.uuid = this.$route.params.uuid;
-        this.fetchData(this.uuid, this.phone);
+        this.mid = this.$route.params.mid;
+        this.fetchData(this.mid, this.phone);
     },
     methods: {
-        fetchData(uuid, phone) {
-            this.$plugin_api.getSignIn(uuid, phone).then(res => {
+        fetchData(mid, phone) {
+            this.$plugin_api.getSignIn(mid, phone).then(res => {
                 this.res = res;
                 this.drawChart(this.res.memberTotal, this.res.signInTotal);
                 this.loading = false;

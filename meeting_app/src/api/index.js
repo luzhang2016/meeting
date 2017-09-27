@@ -1,29 +1,15 @@
 import axios from 'axios'
 import qs from 'qs'
-import md5 from 'js-md5';
 
-const apiUrl = '';
+const apiUrl = 'http://localhost:80';
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
-function token() {
-    let e = new Date()
-    let month = (e.getMonth() + 1) < 10 ? "0" + (e.getMonth() + 1) : (e.getMonth() + 1);
-    let day = e.getDate() < 10 ? "0" + e.getDate() : e.getDate();
-    let h = e.getHours() < 10 ? "0" + e.getHours() : e.getHours();
-    let min = e.getMinutes() < 10 ? "0" + e.getMinutes() : e.getMinutes();
-    let s = e.getSeconds() < 10 ? "0" + e.getSeconds() : e.getSeconds();
-    let ms = e.getMilliseconds();
-    ms = ms >= 100 ? ms : (ms < 10 ? "00" + ms : "0" + ms);
-    let str = e.getFullYear() + month + day + h + min + s + ms;
-    let random = parseInt(100000 * Math.random())
-    let sign = str + '-' + random + '-' + '@*api#%^@'
-    return md5(sign) + '|' + str + '|' + random;
-}
 
 function get(url) {
-    return axios.get(apiUrl + url + '&token=' + token()).then(res => {
-        if (res.status !== 200) return null;
-        if (!res.data.success) return alert(res.data.message);
-        return res.data.data;
+    console.log('request url:', apiUrl + url)
+    return axios.get(apiUrl + url).then(res => {
+        // if (res.status !== 200) return null;
+        // if (!res.data.success) return alert(res.data.message);
+        return res.data;
     }).catch(err => {
         console.error(err);
         return null;
@@ -32,10 +18,10 @@ function get(url) {
 
 function put(url) {
     // console.log('request url:', url);
-    return axios.put(apiUrl + url + '&token=' + token()).then(res => {
-        if (res.status !== 200) return null;
-        if (!res.data.success) return null;
-        return res.data.data;
+    return axios.put(apiUrl + url).then(res => {
+        // if (res.status !== 200) return null;
+        // if (!res.data.success) return null;
+        return res.data;
     }).catch(err => {
         console.error(err); //输出日志
         return null;
@@ -46,28 +32,34 @@ class apiService {
     constructor(Vue) {
         //  this.Vue = new Vue();
     }
-    getListSimple(sTime, eTime) {
-        return get('/api/meeting/listSimple?sTime=' + sTime + '&eTime=' + eTime)
+    getListSimple() {
+        return get("/meeting/php/index/list.php")
     }
 
-    getMeeting(uuid) {
-        return get('/api/meeting?UUID=' + uuid)
+    getMeeting(mid, phone = '') {
+        return get('/meeting/php/index/meetdetail.php?mid=' + mid + '&phone=' + phone)
+    }
+    getAgenda(mid) {
+        return get('/meeting/php/index/meetagenda.php?mid=' + mid)
+    }
+    getMember(mid) {
+        return get('/meeting/php/index/member.php?mid=' + mid)
     }
 
-    getFiles(uuid, flag) {
-        return get('/api/meeting/files?uuid=' + uuid + '&flag=' + flag)
+    getFiles(mid, flag) {
+        return get('/meeting/php/index/download.php?mid=' + mid + '&flag=' + flag)
     }
     downLoad(fileUUID, username) {
         return put('/api/meeting/download?fileUUID=' + fileUUID + '&downloadUser=' + username)
     }
-    getSignIn(uuid, phone) {
-        return get('/api/meeting/signin?uuid=' + uuid + '&mobile=' + phone)
+    getSignIn(mid, phone) { //签到成功后
+        return get('/api/meeting/signin?uuid=' + mid + '&mobile=' + phone)
     }
-    SignIn(uuid, phone, addr) {
-        return put('/api/meeting/signin?uuid=' + uuid + '&mobile=' + phone + '&signInAddr=' + addr)
+    SignIn(mid, phone, addr) { //签到
+        return put('/meeting/php/index/signin.php?mid=' + mid + '&mobile=' + phone + '&signInAddr=' + addr)
     }
-    getSignInList(uuid) {
-        return get('/api/meeting/signInList?uuid=' + uuid)
+    getSignInList(mid) { //签到详情
+        return get('/api/meeting/signInList?uuid=' + mid)
     }
 }
 

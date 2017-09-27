@@ -38,7 +38,7 @@
                     <canvas id="myChart" width="200" height="100"></canvas>
                     <p class="number">{{res.signInIndex}} / {{res.memberTotal}}</p>
                     <p class="text">已签到/应签到</p>
-                    <router-link :to="'/statistic/'+this.uuid" replace>
+                    <router-link :to="'/statistic/'+this.mid" replace>
                         <div class="data">数据统计</div>
                     </router-link>
                 </div>
@@ -78,7 +78,7 @@ export default {
                 Toast("定位中，请稍候");
                 return;
             }
-            this.$plugin_api.SignIn(this.uuid, this.phone, this.result).then(res => {
+            this.$plugin_api.SignIn(this.mid, this.phone, this.result).then(res => {
                 this.res = res;
                Toast("签到成功");
                 this.drawChart(this.res.memberTotal, this.res.signInIndex);
@@ -117,7 +117,7 @@ export default {
         }
     },
     mounted() {
-        this.uuid = this.$route.params.uuid;
+        this.mid = this.$route.params.mid;
         let map = new BMap.Map('allmap');
         let point = new BMap.Point(116.404, 39.915);
         map.centerAndZoom(point, 18);

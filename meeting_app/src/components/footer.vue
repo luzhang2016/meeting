@@ -1,7 +1,7 @@
 <template>
   <div id="tabbar">
     <div class="item">
-      <router-link :to="'/detail/'+this.uuid">
+      <router-link :to="'/detail/'+this.mid">
         <div class="icon">
           <i class="fa fa-folder-open-o fa-2x" aria-hidden="true"></i>
         </div>
@@ -11,7 +11,7 @@
       </router-link>
     </div>
     <div class="item">
-      <router-link :to="'/content/'+this.uuid">
+      <router-link :to="'/content/'+this.mid">
         <div class="icon">
           <i class="fa fa-clipboard fa-2x" aria-hidden="true"></i>
         </div>
@@ -21,7 +21,7 @@
       </router-link>
     </div>
     <div class="item">
-      <router-link :to="'/member/'+this.uuid">
+      <router-link :to="'/member/'+this.mid">
         <div class="icon">
           <i class="fa fa-user-o fa-2x" aria-hidden="true"></i>
         </div>
@@ -31,7 +31,7 @@
       </router-link>
     </div>
     <div class="item">
-      <router-link :to="'/record/'+this.uuid">
+      <router-link :to="'/record/'+this.mid">
         <div class="icon">
           <i class="fa fa-pencil-square-o fa-2x" aria-hidden="true"></i>
         </div>
@@ -45,7 +45,7 @@
 <script>
 export default {
 props:{
-  uuid:{
+  mid:{
     type:String,
     default:''
   }

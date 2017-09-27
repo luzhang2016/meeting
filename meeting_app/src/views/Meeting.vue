@@ -1,13 +1,13 @@
 <template>
   <div id="meeting">
-    <loading v-show="loading"></loading>
+    <!--<loading v-show="loading"></loading>-->
     <div class="top">
       <myhead title="会议详情">
         <span slot="right" class="right">
-          <router-link :to="'/register/'+this.uuid" v-show="flag==0">
+          <router-link :to="'/register/'+this.mid" v-show="flag==0">
             <span class="right-name">签到</span>
           </router-link>
-          <router-link :to="'/registered/'+this.uuid" v-show="flag==1">
+          <router-link :to="'/registered/'+this.mid" v-show="flag==1">
             <span class="right-name">签到详情</span>
           </router-link>
         </span>
@@ -36,7 +36,7 @@
       </div>
       <extra :data="this.meetingData.MeetingBusiness"></extra>
     </div>
-    <myFooter :uuid="this.uuid"></myFooter>
+    <myFooter :mid="this.mid"></myFooter>
   </div>
 </template>
 
@@ -52,31 +52,28 @@ export default {
     extra
   },
   mounted() {
-    this.uuid = this.$route.params.uuid;
-    this.fetchData(this.uuid);
+    this.mid = this.$route.params.mid;
+    // console.log(this.$route.params.mid)
+    this.fetchData(this.mid,this.phone);
   },
   methods: {
-    fetchData(uuid) {
-        this.$plugin_api.getMeeting(uuid).then(res => {
+    fetchData(mid,phone) {
+        this.$plugin_api.getMeeting(mid,phone).then(res => {
           console.log(res)
         this.members = res.MeetingMember;
-        this.meetingData = res;
-        this.members.forEach((e, index) => {
-          if (e.mobile == this.phone) {
-            this.flag = e.signInFlag;
-          }
-        });
-        this.loading = false;
+        this.meetingData = res[0];
+        this.flag=res[0].SignInFlag
+        // this.loading = false;
       })
     }
   },
   data() {
     return {
-      uuid: '',
+      mid: null,
       meetingData: {},
       flag: '2',
       load: true,
-      phone: user.userphone,
+      phone: 13806619662,
       loading: true
     }
   },

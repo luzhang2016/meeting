@@ -18,8 +18,8 @@
     <div class="list-wrapper">
       <p class="list-title">下载记录</p>
       <div class="list-member" v-for="(item,index) in data.Download" :key="index">
-        <span>{{item.downloadUser}}</span>
-        <span class="downloadTime">{{item.downloadTime}}</span>
+        <span>{{item.DownloadUser}}</span>
+        <span class="downloadTime">{{item.DownloadTime}}</span>
       </div>
     </div>
   </div>
@@ -34,13 +34,14 @@ export default {
     }
   },
   mounted() {
-    this.uuid = this.$route.params.uuid;
+    this.mid = this.$route.params.mid;
     this.index = this.$route.params.index;
-    this.fetchData(this.uuid, this.index);
+    this.fetchData(this.mid, this.index);
   },
   methods: {
-    fetchData(uuid, index) {
-      this.$plugin_api.getFiles(uuid, 0).then(res => {
+    fetchData(mid, index) {
+      this.$plugin_api.getFiles(mid, 0).then(res => {
+        console.log(res[index])
         this.data = res[index];
         this.loading = false;
       }
